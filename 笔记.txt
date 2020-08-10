@@ -1,0 +1,164 @@
+1.android studio 连接夜神模拟器：
+问题:1）板卡是什么？板卡是一种印制电路板，简称PCB板，制作时带有插芯，可以插入计算机的主电路板（主板）的插槽中，
+用来控制硬件的运行，比如显示器、采集卡等设备，安装驱动程序后，即可实现相应的硬件功能。
+            计算机领域内，把主板与声卡、显卡等合称板卡。
+      
+        2）没有连接设备解决办法：adb nodaemon server查看端口是否被占用
+                                                   netstat -ano | findstr "****"查看哪个进程占用的端口
+                                                   tasklist | findstr "*****"
+                                                   taskkill /f /pid *****结束进程
+
+2.删除不了的文件关闭的是任务管理器中的进程，不是应用！！！
+3.ADB命令：1）查看屏幕分辨率adb -e shell wm size[-e 当前唯一运行的模拟器
+                                                                              -d 指定当前唯一通过 USB 连接的 Android 设备为命令目标
+                                                                              -s 指定相应 serialNumber 号的设备/模拟器为命令目标]
+                    2）指定 adb server 的网络端口 adb -p start-server
+4.windows批处理文件，出现乱码时，将其另存为ANSI编码格式。
+5.向Android模拟器的虚拟sdCard中导入文件
+  adb pull 和push命令
+                      adb pull sdcard/0721.txt d:\test:将模拟器中sdcard文件夹下的0721文件拖到PC端D盘test文件夹下
+                      adb push D:\0721.txt sdcard/：将电脑D盘下的0721文件移动到模拟器中的sdcard文件夹下
+6. top命令:
+        >adb shell top -h
+           adb shell top -m 2 > d:\0721.txt  表示打印的2个进程的数据保存到本地D盘的0721.txt文件中
+ Usage: top [ -m max_procs ] [ -n iterations ] [ -d delay ] [ -s sort_column ] [-t ] [ -h ]
+ -m num Maximum number of processes to display. 最多显示多少个进程
+ -n num Updates to show before exiting. 刷新次数
+ -d num Seconds to wait between updates. 刷新间隔时间（默认5秒）
+ -s col Column to sort by (cpu,vss,rss,thr). 按哪列排序
+ -t Show threads instead of processes. 显示线程信息而不是进程
+ -h Display this help screen. 显示帮助文档
+ 7. ADB命令模拟按键：adb shell input keyevent <keycode>例如：adb shell input keyevent 3  按模拟器的HOME键
+   常用的：[3 Home 4 Back 19 Up 20 Down 21 Left 22 Right 23 Select/Ok 24 Volume+ 25 Volume-]
+  
+ logcat等级：默认级别为V，输出人日志最低，日志级别最低
+D —— Debug
+I —— Info
+W —— Warning
+E —— Error
+F —— Fatal  致命
+S —— Silent（最高，啥也不输出）
+adb logcat *：E（不区分大小写）[查看手机的级别为错误的日志]
+
+8.管道进程查看日志：
+windows上不能使用grep关键字，而是应该用findstr
+只抓取某个app的命令        
+adb logcat | findstr app进程号
+
+9.把日志输出到手机指定目录
+adb logcat -f / sdcard/zjdata.bredbaby/log/1.txt
+
+10. 删除：
+进入系统内指定文件夹
+#ls //列表显示当前文件夹内容
+#rm -r xxx // 删除名字为xxx的文件夹及其里面的所有文件
+#rm xxx // 删除文件xxx
+#rm dir xxx // 删除xxx的文件夹
+11.android 常出现的：ANR 和TomStone问题
+  避免ANR：不要在主线程(UI线程)里面做繁重的操作
+  ANR问题分析：1.DDMS方法分析原因：
+                           2.traces文件方法：log方式
+
+ 解决方式：1.主线程阻塞
+
+                    开辟单独的子线程来处理耗时阻塞事务.
+
+                 2.CPU满负荷, I/O阻塞
+
+                    I/O阻塞一般来说就是文件读写或数据库操作执行在主线程了, 也可以通过开辟子线程的方式异步执行.
+
+                 3.内存不够用
+
+                    增大VM内存, 使用largeHeap属性, 排查内存泄露等.
+
+0722
+1.mount 挂载分区
+mount   -o  remount,rw  /dev/block/mtdblock3  /system
+这个命令的意思是 remount是重新挂载的意思。
+r表示read。w表示write就是读写的意思。  然后后面跟着的是分区的路径  路径为/dev/block/mtdblock3   
+再就是要挂载在根目录下面  并且命名为system
+
+2.gerrit的使用以及简单的命令行操作。
+
+0723
+1.查看本机MAC地址命令：ipconfig/all,查看本机所有信息
+2.IP地址百度。
+
+
+0724
+1.联网配置：http://confluence.human-horizons.com/pages/viewpage.action?pageId=25895843
+2.wifi配置
+
+短期解决办法，系统每次开机后，需执行如下adb指令：
+i. adb root
+ii. adb remount
+iii. adb pull /system/etc/firmware/bcmdhd.cal .
+iv. 本地打开该文件，找到macaddr,自定义一个MAC地址，例如00:90:4c:78:aa:01，（此mac地址需经过IT策略允许）
+v. adb push bcmdhd.cal /system/etc/firmware/
+vi. rmmod vendor/lib/modules/bcmdhd.ko && insmod vendor/lib/modules/bcmdhd.ko
+vii. adb shell ifconfig wlan
+
+3.log等级更新：
+adb shell  setprop persist.log.tag D/E
+查看系统中配置：adb shell getprop
+
+4.查看连接设备的文件  adb shell 
+                                    su
+                                    ls
+
+
+0727shell脚本语言
+windows环境下运行shell脚本语言：安装git  在git的bin目录下cmd  输入sh .\test.sh 
+1.shell 字符串：
+单引号双引号：
+
+单引号字符串的限制：
+单引号里的任何字符都会原样输出，单引号字符串中的变量是无效的；
+单引号字串中不能出现单独一个的单引号（对单引号使用转义符后也不行），但可成对出现，作为字符串拼接使用
+双引号的优点：
+
+双引号里可以有变量
+双引号里可以出现转义字符
+
+2.查找子字符用反引号` `
+3.在 Shell 中，用括号来表示数组，数组元素用"空格"符号分割开。
+4.Shell 基本运算符
+表达式和运算符之间要有空格，例如 2+2 是不对的，必须写成 2 + 2，这与我们熟悉的大多数编程语言不一样。
+完整的表达式要被 ` ` 包含，注意这个字符不是常用的单引号，在 Esc 键下边。
+
+0728
+
+1.执行脚本时，是在一个子shell中，结束即退出。
+   系统环境变量会被复制到子shell中，该环境变量对该shell及其子shell有效，结束变量消失
+   不用shell定义的变量只对该shell有效，对子shell无效
+
+2.[[  ]]：双中括号：
+括号中所有的字符都不会发生文件名扩展或者单词分割，但是会发生参数扩展和命令替换；
+=~操作符时甚至支持shell的正则表达式 ；
+使用[[ … ]]条件判断结构，而不是[ … ]，能够防止脚本中的许多逻辑错误；
+括号中的表达式是一个单独的元素。
+
+3.乘号*需要转义字符 a\*b（a*b）  
+0729 shell语言的学习
+0730 
+1.pyton基础知识
+局部变量不能输出
+
+0803
+1.iloc的使用，按行读取pd.iloc（：10，5：7）：第5，6列前十行数据
+1.python对文件各种操作的学习。
+2.独立完成最近版本的VIP和QNX的刷写。
+3.tqdm模块的学习，显示进度条。
+4.数据清洗相关模块的学习，开始研究吴石磊给自己的需求。
+
+0804
+1.adb shell dumpsys meminfo 1037:查看PID=1037进程的内存分布情况。
+  C/C++申请的内存空间在native heap中，
+  java申请的内存空间则在dalvik heap中。
+  java程序发生OMM是堆内存超出了dalvik.vm.heapsize的限制。
+  dalvik.vm.heapsize 的显示，仅是对dalvik进程中java对的限制。
+  对native 堆 并没有限制。所以在android程序中natvie 堆的内存可以很大。
+  0807
+1.代码块中局部变量 如果子代码块中有同名变量，那么会被覆盖
+循环中的循环不要用同一个变量
+
