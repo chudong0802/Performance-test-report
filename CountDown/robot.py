@@ -24,10 +24,10 @@ def send_msg_markdown():
     send_data = {
         "msgtype": "markdown",
         "markdown": {
-            "content": "## 距2020年12月31日\n" +
-                       "# <font color=\"info\">Bug Free</font> \n"+
+            "content": "### 距2020年12月31日\n" +
+                       "## <font color=\"info\">Bug Free</font> \n"+
                        "# <font color=\"warning\">剩余{}天</font> \n ".format(delta.days) +
-                       "\n>### {} \n".format(note)
+                       "\n>####  {} \n".format(note)
         }
     }
     res = requests.post(url=send_url, headers=headers, json=send_data)
