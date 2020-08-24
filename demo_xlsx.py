@@ -45,7 +45,7 @@ def deal_file_draw():
         plt.figure(figsize=(20, 10))
         # 坐标轴重合时，设置倾斜度
         # plt.xticks(rotation=45)
-        plt.plot(x, all_y[0], color='orange', marker='s', label='max')
+        plt.plot(x, all_y[0], color='red', marker='s', label='max')
         plt.plot(x, all_y[1], color='green', marker='o', label='min')
         plt.plot(x, all_y[2], color='blue', marker='*', label='avg')
         for n in range(3):
@@ -60,7 +60,7 @@ def deal_file_draw():
         # bluetooth_native
         plt.figure(figsize=(20, 10))
         all_y1 = [dealed_file['native max'], dealed_file['native min'], dealed_file['native avg']]
-        plt.plot(x, all_y1[0], color='orange', marker='s', label='max')
+        plt.plot(x, all_y1[0], color='red', marker='s', label='max')
         plt.plot(x, all_y1[1], color='green', marker='o', label='min')
         plt.plot(x, all_y1[2], color='blue', marker='*', label='avg')
         for m in range(3):
@@ -76,7 +76,7 @@ def deal_file_draw():
         # bluetooth_cpu
         plt.figure(figsize=(20, 10))
         all_y2 = [dealed_file['cpu max'], dealed_file['cpu min'], dealed_file['cpu avg']]
-        plt.plot(x, all_y2[0], color='orange', marker='s', label='max')
+        plt.plot(x, all_y2[0], color='red', marker='s', label='max')
         plt.plot(x, all_y2[1], color='green', marker='o', label='min')
         plt.plot(x, all_y2[2], color='blue', marker='*', label='avg')
         for k in range(3):
