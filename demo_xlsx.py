@@ -48,8 +48,8 @@ def deal_file_draw():
         plt.plot(x, all_y[0], color='orange', marker='s', label='max')
         plt.plot(x, all_y[1], color='green', marker='o', label='min')
         plt.plot(x, all_y[2], color='blue', marker='*', label='avg')
-        for i in range(3):
-            for a, b in zip(x, all_y[i]):
+        for n in range(3):
+            for a, b in zip(x, all_y[n]):
                 plt.text(a, b+0.1, b, ha='center', va='bottom', fontsize=10)
         plt.locator_params('y', nbins=15)
         plt.legend(bbox_to_anchor=(0.9, 1), framealpha=0.2)
@@ -63,8 +63,8 @@ def deal_file_draw():
         plt.plot(x, all_y1[0], color='orange', marker='s', label='max')
         plt.plot(x, all_y1[1], color='green', marker='o', label='min')
         plt.plot(x, all_y1[2], color='blue', marker='*', label='avg')
-        for i in range(3):
-            for a,b in zip(x,all_y1[i]):
+        for m in range(3):
+            for a,b in zip(x,all_y1[m]):
                 plt.text(a,b+0.2,b,ha='center',va='bottom',fontsize=10)
         plt.locator_params('y', nbins=15)
         plt.legend(bbox_to_anchor=(0.9, 1), framealpha=0.2)
@@ -79,8 +79,8 @@ def deal_file_draw():
         plt.plot(x, all_y2[0], color='orange', marker='s', label='max')
         plt.plot(x, all_y2[1], color='green', marker='o', label='min')
         plt.plot(x, all_y2[2], color='blue', marker='*', label='avg')
-        for i in range(3):
-            for a, b in zip(x, all_y2[i]):
+        for k in range(3):
+            for a, b in zip(x, all_y2[k]):
                 plt.text(a, b, b, ha='center', va='bottom', fontsize=10)
         plt.locator_params('y', nbins=15)
         plt.legend(bbox_to_anchor=(0.9, 1), framealpha=0.2)
